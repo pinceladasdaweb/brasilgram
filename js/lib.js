@@ -1,5 +1,4 @@
-var accessToken = '966633.a3b48b3.1277b3ac8db54ebdaaa55faba838a3a0',
-	agent = navigator.userAgent.match( /(iPhone|iPod|Android)/i ),
+var	agent = navigator.userAgent.match( /(iPhone|iPod|Android)/i ),
 	limit = 50,
 	currentLocation = window.location.hash,
 	cleanCurrentLocation = currentLocation.replace('#','');
@@ -55,7 +54,7 @@ var brasilgram = function() {
 			});
 		},
 		loadImages: function() {
-			var getImagesURL = 'https://api.instagram.com/v1/tags/'+cleanCurrentLocation+'/media/recent?client_id=be52cb013dda4c47a03cdd5689896c37&count='+limit+'&access_token='+ accessToken +'&callback=?'
+			var getImagesURL = 'https://api.instagram.com/v1/tags/'+cleanCurrentLocation+'/media/recent?client_id=be52cb013dda4c47a03cdd5689896c37&count='+limit+'&callback=?'
 			$.ajax({
 				type: "GET",
 				dataType: "jsonp",
