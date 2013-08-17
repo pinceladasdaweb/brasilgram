@@ -1,11 +1,18 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-
-*,
-*:after,
-*:before {
+* {
 	padding: 0;
 	margin: 0;
 }
+
+.cf:before, .cf:after {
+  content: " ";
+  display: table
+}
+
+.cf:after {
+  clear: both
+}
+
+header, nav {display: block}
 
 body {
 	font-family: 'Lato', 'Myriad Pro','Trebuchet MS', sans-serif;
@@ -30,17 +37,13 @@ a img {
 	position: relative;
 }
 
-.header {background-color:#000; padding:15px; position:relative}
-.header:before, .header:after {content: ''; display:table}
-.header:after {
-    clear: both;
-}
+header {background-color: #000; padding: 15px; position: relative}
+header h1 {color: #fff; font-size: 2em; float:left; text-shadow: 0 0 1px #FFFFFF}
 
-.header h1 {color:#fff; font-size:2em; float:left; text-shadow:0 0 1px #FFFFFF}
-
-.header .social {float:right; margin-top:10px}
-.header .social > div {float:left; margin-right:10px}
-.header .social .fb-like {margin-right:40px}
+header .social {float: right; margin-top: 10px}
+header .social > div {float: left; margin-right: 10px}
+header .social .fb-like {margin-right: 20px}
+header .social .tweet {width: 90px}
 
 #open-menu {background:url(../images/icon-menu.png) no-repeat; float:left; height:24px; margin:5px 20px 0 0; width:36px}
 #open-menu span {display:none}
@@ -49,7 +52,7 @@ a img {
 #states li {float:left; list-style:none; font-size:1em; line-height:24px; padding-left:10px; width:150px}
 #states li a {color:#fff}
 
-.ri-grid{
+.ri-grid {
 	position: relative;
 	height: auto;
 }
@@ -61,22 +64,6 @@ a img {
 	margin: 0;
 	padding: 0;
 }
-
-/* Clear floats by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
-
-.ri-grid ul:before,
-.ri-grid ul:after{
-	content: '';
-    display: table;
-}
-
-.ri-grid ul:after {
-    clear: both;
-}
-
-.ri-grid ul {
-    zoom: 1;
-} 
 
 .ri-grid ul li {
 	-webkit-perspective: 400px;
@@ -181,7 +168,10 @@ a img {
 
 @media only screen and (max-width: 480px) {
 	.header h1 {float:none; text-align:center}
-	.social {display:none}
 	#states {height:345px; left:0; width:320px}
 	#states li {font-size.9em}
+}
+
+@media only screen and (max-width: 760px) {
+	.social {display:none}
 }
