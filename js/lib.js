@@ -1,9 +1,9 @@
-var Browser = function () {
+var Browser = (function () {
     var u = navigator.userAgent;
     return {
         m: u.match(/(iPhone|iPod|Android)/i)
-    }
-}();
+    };
+}());
 
 var Social = {
     init: function () {
@@ -56,7 +56,7 @@ var brasilgram = (function () {
     var module = {
         limit: 50,
         curLocation: window.location.hash,
-        setGrid: function(){
+        setGrid: function () {
             $('#ri-grid').gridrotator({
                 rows: 4,
                 columns: 8,
@@ -82,18 +82,18 @@ var brasilgram = (function () {
                 w240: {
                     rows: 7,
                     columns: 3
-                },
+                }
             });
         },
         getHash: function (url) {
-            return url.replace('#','');
+            return url.replace('#', '');
         },
         imgUrl: function (location, limit) {
-            return 'https://api.instagram.com/v1/tags/'+ location +'/media/recent?client_id=be52cb013dda4c47a03cdd5689896c37&count='+ limit +'&callback=?';
+            return 'https://api.instagram.com/v1/tags/' + location + '/media/recent?client_id=be52cb013dda4c47a03cdd5689896c37&count=' + limit + '&callback=?';
         },
-        default: function () {
+        early: function () {
             var cleanLocation = module.getHash(module.curLocation);
-            if (cleanLocation == '') {
+            if (cleanLocation === '') {
                 module.curLocation = 'brasil';
             }
 
@@ -105,7 +105,7 @@ var brasilgram = (function () {
             var menu = $('#open-menu'),
                 states = $('#states'),
                 links = states.find('a');
-            
+
             menu.click(function (e) {
                 e.preventDefault();
                 states.slideToggle();
@@ -124,43 +124,42 @@ var brasilgram = (function () {
         },
         loadImages: function () {
             var cleanLocation = module.getHash(module.curLocation);
-            
             module.setup(module.imgUrl(cleanLocation, module.limit));
         },
         template: function (url, photo) {
             return '<li><a href="' + url + '" target="_blank"><img src="' + photo + '" /></a></li>';
         },
         setup: function (url) {
-            var grid = $('#ri-grid'), 
+            var grid = $('#ri-grid'),
                 instagram = $('<ul/>', {
-                id: 'instagram',
-                class: 'cf'
-            }).appendTo(grid);
+                    id: 'instagram',
+                    class: 'cf'
+                }).appendTo(grid);
 
             $.ajax({
                 type: 'GET',
                 dataType: 'jsonp',
                 cache: false,
                 url: url
-            }).then(function(resp) {
-                if (resp.meta.code == '200') {
-                    var data = resp.data, i, len;
+            }).then(function (resp) {
+                if (resp.meta.code === 200) {
+                    var data = resp.data, photo, url, i, len;
 
-                    for (i = 0, len = data.length; i < len; i += 1 ) {
-                        var photo = data[i].images.low_resolution.url,
-                            url = data[i].link;
+                    for (i = 0, len = data.length; i < len; i += 1) {
+                        photo = data[i].images.low_resolution.url;
+                        url = data[i].link;
 
                         $(instagram).append(module.template(url, photo));
                     }
 
                     module.setGrid();
                 } else {
-                    throw new Error ('A API do instagram está indisponível');
+                    throw new Error('A API do instagram está indisponível');
                 }
             });
         },
         init: function () {
-            module.default();
+            module.early();
             module.events();
             module.loadImages();
         }
