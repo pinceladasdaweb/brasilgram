@@ -167,7 +167,9 @@ header .social .tweet {width: 90px}
 }
 
 @media only screen and (max-width: 480px) {
-	.header h1 {float:none; text-align:center}
+	header {position: relative}
+	header #open-menu {position: absolute; top: 15px; left: 15px}
+	header h1 {float:none; text-align: center;}
 	#states {height:345px; left:0; width:320px}
 	#states li {font-size.9em}
 }
