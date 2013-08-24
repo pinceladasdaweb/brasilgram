@@ -1,9 +1,6 @@
-var Browser = (function () {
-    var u = navigator.userAgent;
-    return {
-        m: u.match(/(iPhone|iPod|Android)/i)
-    };
-}());
+var isMobile = (function (userAgent) {
+    return !!userAgent.match(/android|webos|ip(hone|ad|od)|opera (mini|mobi|tablet)|iemobile|windows.+(phone|touch)|mobile|fennec|kindle (Fire)|Silk|maemo|blackberry|playbook|bb10\; (touch|kbd)/i);
+}(navigator.userAgent));
 
 var Social = {
     init: function () {
@@ -88,7 +85,7 @@ var brasilgram = (function () {
         getHash: function (url) {
             return url.replace('#', '');
         },
-        imgUrl: function (location, limit) {
+        api: function (location, limit) {
             return 'https://api.instagram.com/v1/tags/' + location + '/media/recent?client_id=be52cb013dda4c47a03cdd5689896c37&count=' + limit + '&callback=?';
         },
         early: function () {
@@ -97,7 +94,7 @@ var brasilgram = (function () {
                 module.curLocation = 'brasil';
             }
 
-            if (!Browser.m) {
+            if (!isMobile) {
                 Social.init();
             }
         },
@@ -119,12 +116,13 @@ var brasilgram = (function () {
                 states.slideToggle();
                 $('#instagram').remove();
 
-                module.setup(module.imgUrl(hash, module.limit));
+                module.setup(module.api(hash, module.limit));
+                window.location.href = loc;
             });
         },
         loadImages: function () {
             var cleanLocation = module.getHash(module.curLocation);
-            module.setup(module.imgUrl(cleanLocation, module.limit));
+            module.setup(module.api(cleanLocation, module.limit));
         },
         template: function (url, photo) {
             return '<li><a href="' + url + '" target="_blank"><img src="' + photo + '" /></a></li>';
